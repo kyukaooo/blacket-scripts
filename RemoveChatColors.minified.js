@@ -1,0 +1,1 @@
+const appendChat=blacket.appendChat;function newAppendChat(a,e){a.author.color="#ffffff",a.author.permissions.includes("use_chat_colors")&&a.author.permissions.splice(a.author.permissions.indexOf("use_chat_colors"),1),appendChat(a,e)}blacket.appendChat=newAppendChat;
