@@ -3,7 +3,7 @@ let max_delay = Object.values(blacket.rarities).map(x => x.wait).reduce((curr, p
 
 let openPack = async (pack) => {
     return new Promise((resolve, reject) => {
-        blacket.requests.post("/worker2/open", {
+        blacket.requests.post("/worker3/open", {
             pack
         }, (data) => {
             if (data.error) reject();
@@ -20,7 +20,7 @@ let main = async (pack, amount) => {
             const attainedBlook = await openPack(pack);
             blacket.user.tokens -= blacket.packs[pack].price;
             const delay = blacket.rarities[blacket.blooks[attainedBlook].rarity].wait + extra_delay;
-            console.log(`%cOpened `,`%c${attainedBlook}`, 'font-size: 4em', `color: ${blacket.rarities[blacket.blooks[attainedBlook].rarity].color}; font-size: 4em`);
+            console.log(`%cOpened %s`, 'font-size: 4em', `%c${attainedBlook ?? "Invalid Blook"}`, `color: ${blacket.rarities[blacket.blooks[attainedBlook].rarity].color ?? "#000000"}; font-size: 4em`);
             attainedBlooks.push(attainedBlook);
             await new Promise((r, _) => setTimeout(r, delay));
         } catch (err) {
@@ -50,4 +50,4 @@ do {
     if (amount === null) break;
 } while(!amount || amount < 1 || amount > max_packs);
 
-main(pack, amount);
+if (pack && amount) main(pack, amount);
